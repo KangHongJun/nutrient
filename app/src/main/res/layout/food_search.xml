@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:backgroundTint="@color/white"
+        android:id="@+id/Search_Toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme" >
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/SearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="2dp"
+        app:iconifiedByDefault="false"
+        app:queryHint="음식을 검색하세요." >
+
+    </androidx.appcompat.widget.SearchView>
+
+    <ListView
+        android:id="@+id/Search_ListView"
+        android:layout_margin="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

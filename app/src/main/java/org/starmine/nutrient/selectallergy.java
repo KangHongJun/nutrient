@@ -34,42 +34,56 @@ public class selectallergy extends Activity {
         Intent intent1 = getIntent();
         String result = intent1.getStringExtra("allergy");
 
-        if(result.equals(null)) {tv.setText("선택된 알레르기가 없습니다.");}
+        if(result==null) {tv.setText("선택된 알레르기가 없습니다.");}
         else {tv.setText("나의 알레르기: " + result);}
 
         all.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(selectallergy.this,FoodList.class);
-                startActivity(intent);
+                Intent all_intent=new Intent(selectallergy.this,FoodList.class);
+                all_intent.putExtra("code",999);
+                startActivity(all_intent);
             }
         });
 
+        //라면
         ramen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent ramen_intent = new Intent(selectallergy.this,FoodList.class);
+                ramen_intent.putExtra("code",0);
+                startActivity(ramen_intent);
             }
         });
 
+        //과자
         snack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent snack_intent = new Intent(selectallergy.this,FoodList.class);
+                snack_intent.putExtra("code",1);
+                startActivity(snack_intent);
 
             }
         });
 
+        //빵
         bread.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent bread_intent = new Intent(selectallergy.this,FoodList.class);
+                bread_intent.putExtra("code",2);
+                startActivity(bread_intent);
             }
         });
 
+        //음료수
         drink.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                Intent drink_intent = new Intent(selectallergy.this,FoodList.class);
+                drink_intent.putExtra("code",3);
+                startActivity(drink_intent);
             }
         });
 

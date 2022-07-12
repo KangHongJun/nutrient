@@ -21,6 +21,7 @@
         <activity android:name=".Food_Detail"/>
         <activity android:name=".Food_Calculate"/>
         <activity android:name=".FoodList"/>
+        <activity android:name=".Food_Search"/>
 
 
 

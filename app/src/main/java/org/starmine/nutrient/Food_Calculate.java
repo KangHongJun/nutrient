@@ -29,10 +29,13 @@ public class Food_Calculate extends AppCompatActivity {
     ArrayList<String> foodList;
     ArrayList<String> sizeList;
     ArrayList<String> calList;
+    ArrayList<String> imageList;
+
+
 
     TextView calculate;
 
-    int calculate_result;
+
 
 
     @Override
@@ -46,6 +49,11 @@ public class Food_Calculate extends AppCompatActivity {
         foodList = new ArrayList<>();
         calList = new ArrayList<>();
         sizeList = new ArrayList<>();
+        imageList = new ArrayList<>();
+
+
+
+
         viewData();
 
 
@@ -75,13 +83,6 @@ public class Food_Calculate extends AppCompatActivity {
                 viewHolder.List_calculate = (Button)convertView.findViewById(R.id.Check_Btn);
                 viewHolder.item_image = (ImageView) convertView.findViewById(R.id.Item_Image);
 
-                HashMap<String,Integer> images = new HashMap<String,Integer>();
-                images.put("shin",Integer.valueOf(R.drawable.shinramen));
-
-                String a = "shin";
-
-                viewHolder.item_image.setImageResource(images.get(a).intValue());
-
 
 
                 viewHolder.relativeLayout = (RelativeLayout)convertView.findViewById(R.id.tester);
@@ -109,12 +110,17 @@ public class Food_Calculate extends AppCompatActivity {
                 mainViewHolder = (FoodAdapter.ViewHolder) convertView.getTag();
                 mainViewHolder.item_name.setText(getItem(position));
                 mainViewHolder.item_size.setText(sizeList.get(position));
-                mainViewHolder.item_cal.setText((CharSequence) calList.get(position));
+                mainViewHolder.item_cal.setText((CharSequence) calList.get(position) + "kcal");
             }
             mainViewHolder = (FoodAdapter.ViewHolder) convertView.getTag();
             mainViewHolder.item_name.setText(getItem(position));
             mainViewHolder.item_size.setText(sizeList.get(position));
-            mainViewHolder.item_cal.setText((CharSequence) calList.get(position));
+            mainViewHolder.item_cal.setText((CharSequence) calList.get(position) + "kcal");
+
+            //이미지
+            String a = imageList.get(position);
+            System.out.println(a + "Cal");
+            mainViewHolder.item_image.setImageResource(FoodList.images.get(a).intValue());
             return convertView;
         }
 
@@ -130,7 +136,10 @@ public class Food_Calculate extends AppCompatActivity {
         }
     }
     private void viewData(){
-        calculate_result = 0;
+        int calculate_result = 0;
+        int protein_result = 0;
+        int sodium_result = 0;
+        int calcium_result = 0;
 
         String checkList[] = new String[100];
 
@@ -149,13 +158,12 @@ public class Food_Calculate extends AppCompatActivity {
                 break;
             }else{
                 checkList[i] = cursor_food.getString(0);
-
             }
             i++;
         }
 
 
-        String sql_view = "select * from food_nutrient";
+        String sql_view = "select * from food2";
         cursor_food = sqlDB.rawQuery(sql_view, null);
 
         int j = 0;
@@ -174,15 +182,20 @@ public class Food_Calculate extends AppCompatActivity {
                     calList.add(cursor_food.getString(2));
 
                     //총 합계
-                    try {
-                        calculate_result = calculate_result + Integer.parseInt(cursor_food.getString(2));
-                        calculate.setText(calculate_result+"g");
-                    }catch (NumberFormatException e){
+                    calculate_result = calculate_result + Integer.parseInt(cursor_food.getString(2));
+                    sodium_result = sodium_result + Integer.parseInt(cursor_food.getString(10));
+                    protein_result = protein_result + Integer.parseInt(cursor_food.getString(12));
+                    calcium_result = calcium_result + Integer.parseInt(cursor_food.getString(13));
 
-                    }
+
+
+
+
+                    calculate.setText("총 칼로리 : " +  calculate_result+"kcal" + " 나트륨 : "+ sodium_result + "mg" + " 단백질 : " + protein_result +"g" + " 칼슘 : " +calcium_result + "mg");
 
 
                     sizeList.add(cursor_food.getString(17));
+                    imageList.add(cursor_food.getString(18));
 
                     //System.out.println(cursor_food.getString(1));
                     //sizeList.add(cursor_food.getString(17));
@@ -191,9 +204,6 @@ public class Food_Calculate extends AppCompatActivity {
                 }
             }
         }
-
-
-
         checkListView_food.setAdapter(new FoodAdapter(this,R.layout.foodlist_item,foodList));
     }
 }
